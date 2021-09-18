@@ -1,4 +1,5 @@
-const { sequelize, DataTypes } = require("../connection");
+const { sequelize, DataTypes } = require("../../connection");
+
 module.exports = sequelize.define("Company", {
   id: {
     autoIncrement: true,
