@@ -1,11 +1,11 @@
 const express = require("express");
-const { Sample } = require("../../models");
+const { Company } = require("../../models");
 
 const router = express.Router();
 
 router.get("/", async (request, response, next) => {
   try {
-    response.send(await Sample.findAll());
+    response.send(await Company.findAll());
   } catch (error) {
     next(error);
   }
@@ -15,7 +15,7 @@ router.get("/:id", async (request, response, next) => {
   try {
     const { id } = request.params;
     response.send(
-      await Sample.findOne({
+      await Company.findOne({
         where: { id: parseInt(id) },
       })
     );
@@ -26,7 +26,7 @@ router.get("/:id", async (request, response, next) => {
 
 router.post("/", async (request, response, next) => {
   try {
-    const result = await Sample.create({ ...request.body });
+    const result = await Company.create({ ...request.body });
     response.send(result);
   } catch (error) {}
 });
@@ -35,7 +35,7 @@ router.put("/:id", async (request, response, next) => {
   try {
     const { id } = request.params;
     response.send(
-      await Sample.update({ ...request.body }, { where: { id: parseInt(id) } })
+      await Company.update({ ...request.body }, { where: { id: parseInt(id) } })
     );
     response.sendStatus(200);
   } catch (error) {
@@ -47,7 +47,7 @@ router.delete("/:id", async (request, response, next) => {
   try {
     const { id } = request.params;
     console.log(id);
-    await Sample.destroy({ where: { id: parseInt(id) } });
+    await Company.destroy({ where: { id: parseInt(id) } });
     response.sendStatus(200);
   } catch (error) {
     next(error);
