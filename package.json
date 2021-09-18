@@ -1,0 +1,19 @@
+{
+  "name": "yunniq-backend",
+  "version": "1.0.0",
+  "main": "app.js",
+  "repository": "https://github.com/haandev/yunniq-backend.git",
+  "author": "Hakan Özoğlu <hakan.ozoglu@glomil.com>",
+  "license": "MIT",
+  "dependencies": {
+    "bcrypt": "^5.0.1",
+    "dotenv": "^10.0.0",
+    "expres": "^0.0.5",
+    "express": "^4.17.1",
+    "fs": "^0.0.1-security",
+    "jsonwebtoken": "^8.5.1",
+    "mysql2": "^2.3.0",
+    "prettier": "^2.4.1",
+    "sequelize": "^6.6.5"
+  }
+}

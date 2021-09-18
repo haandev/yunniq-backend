@@ -1,6 +1,8 @@
-const { sequelize, DataTypes } = require("../../connection");
+const { sequelize, DataTypes } = require("./../connection");
 
-module.exports = sequelize.define("Table", {
+const Company = require("./Company");
+
+const Table = sequelize.define("Table", {
   id: {
     autoIncrement: true,
     type: DataTypes.INTEGER.UNSIGNED,
@@ -16,3 +18,9 @@ module.exports = sequelize.define("Table", {
     allowNull: false,
   },
 });
+
+Table.belongsTo(Company, {
+  foreignKey: "company_id",
+});
+
+module.exports = Table;

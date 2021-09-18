@@ -1,3 +1,4 @@
+require("dotenv").config();
 const express = require("express");
 const { connect, sync } = require("./connection");
 
@@ -7,16 +8,18 @@ app.use(express.json());
 
 (async () => {
   await connect();
-  require("./controllers")(app);
+  require("./controller")(app);
 
   await sync();
 
-  app.get("/", function (req, res) {
-    res.send("Welcome to Yunniq API 0.0.1!");
+  app.get("/", function (request, response) {
+    response.send("Welcome to Yunniq API 0.0.1!");
   });
 
-  app.listen(80, () => {
-    console.log("Welcome to Yunniq API 0.0.1! Listening on port 80");
-    console.log("http://localhost:80");
+  app.listen(process.env.APP_PORT, () => {
+    console.log(
+      "Welcome to Yunniq API 0.0.1! Listening on port 80",
+      "http://localhost:" + process.env.APP_PORT
+    );
   });
 })();

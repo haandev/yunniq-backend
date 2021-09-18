@@ -1,6 +1,6 @@
-const { sequelize, DataTypes } = require("../../connection");
+const { sequelize, DataTypes } = require("./../connection");
 
-module.exports = sequelize.define("ProductLocale", {
+const ProductLocale = sequelize.define("ProductLocale", {
   id: {
     autoIncrement: true,
     type: DataTypes.INTEGER.UNSIGNED,
@@ -20,3 +20,5 @@ module.exports = sequelize.define("ProductLocale", {
     allowNull: false,
   },
 });
+
+module.exports = ProductLocale;

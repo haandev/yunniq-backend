@@ -1,15 +1,9 @@
-const express = require("express");
-const { Product } = require("../../models");
-
-const router = express.Router();
+const router = require("express").Router();
+const { Company } = require("../model");
 
 router.get("/", async (request, response, next) => {
   try {
-    response.send(
-      await Product.findAll({
-        include: [{ all: true, nested: true }],
-      })
-    );
+    response.send(await Company.findAll());
   } catch (error) {
     next(error);
   }
@@ -19,8 +13,7 @@ router.get("/:id", async (request, response, next) => {
   try {
     const { id } = request.params;
     response.send(
-      await Product.findOne({
-        include: [{ all: true, nested: true }],
+      await Company.findOne({
         where: { id: parseInt(id) },
       })
     );
@@ -31,7 +24,7 @@ router.get("/:id", async (request, response, next) => {
 
 router.post("/", async (request, response, next) => {
   try {
-    const result = await Product.create({ ...request.body });
+    const result = await Company.create({ ...request.body });
     response.send(result);
   } catch (error) {}
 });
@@ -40,7 +33,7 @@ router.put("/:id", async (request, response, next) => {
   try {
     const { id } = request.params;
     response.send(
-      await Product.update({ ...request.body }, { where: { id: parseInt(id) } })
+      await Company.update({ ...request.body }, { where: { id: parseInt(id) } })
     );
     response.sendStatus(200);
   } catch (error) {
@@ -52,7 +45,7 @@ router.delete("/:id", async (request, response, next) => {
   try {
     const { id } = request.params;
     console.log(id);
-    await Product.destroy({ where: { id: parseInt(id) } });
+    await Company.destroy({ where: { id: parseInt(id) } });
     response.sendStatus(200);
   } catch (error) {
     next(error);

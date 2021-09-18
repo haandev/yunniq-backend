@@ -1,15 +1,23 @@
 const { Sequelize, DataTypes } = require("sequelize");
 
 const dbConfig = {
-  dialect: "mysql",
-  port: 3306,
-  username: "root",
-  password: "000000",
-  host: "localhost",
-  database: "yunniq",
-}; //TODO : environment varibles
+  dialect: process.env.DB_DRIVER,
+  port: process.env.DB_PORT,
+  username: process.env.DB_USER,
+  password: process.env.DB_PASSWORD,
+  host: process.env.DB_HOST,
+  database: process.env.DB_NAME,
+};
 
-const sequelize = new Sequelize(dbConfig);
+const sequelize = new Sequelize({
+  ...dbConfig,
+  define: {
+    underscored: true,
+    timestamps: true,
+  },
+  logQueryParameters: false,
+  logging: false,
+});
 const connect = async () => {
   try {
     await sequelize.authenticate();
@@ -21,9 +29,10 @@ const connect = async () => {
 async function sync() {
   try {
     await sequelize.sync({
-      alter: true, // TODO : check environment, alter true development only
+      alter: process.env.NODE_ENV === "development",
+      logging: false,
     });
-    console.log(`Database & tables created!`);
+    console.log(`Models synchronized successfully`);
   } catch (error) {
     console.error("Unable to sync:", error);
   }

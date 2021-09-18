@@ -1,20 +1,16 @@
-const express = require("express");
-const { Category } = require("../../models");
-const { Company } = require("../../models");
+const router = require("express").Router();
+const { Product } = require("../model");
 
-const router = express.Router();
+const auth = require("./../middleware/auth");
 
-router.get("/", async (request, response, next) => {
+router.get("/", auth, async (request, response, next) => {
   try {
-    response.send(
-      await Category.findAll({
-        include: [
-          {
-            model: Company,
-          },
-        ],
+    /*response.send(
+      await Product.findAll({
+        include: [{ all: true, nested: true }],
       })
-    );
+    );*/
+    response.send(request.user);
   } catch (error) {
     next(error);
   }
@@ -24,12 +20,8 @@ router.get("/:id", async (request, response, next) => {
   try {
     const { id } = request.params;
     response.send(
-      await Category.findOne({
-        include: [
-          {
-            model: Company,
-          },
-        ],
+      await Product.findOne({
+        include: [{ all: true, nested: true }],
         where: { id: parseInt(id) },
       })
     );
@@ -40,7 +32,7 @@ router.get("/:id", async (request, response, next) => {
 
 router.post("/", async (request, response, next) => {
   try {
-    const result = await Category.create({ ...request.body });
+    const result = await Product.create({ ...request.body });
     response.send(result);
   } catch (error) {}
 });
@@ -49,10 +41,7 @@ router.put("/:id", async (request, response, next) => {
   try {
     const { id } = request.params;
     response.send(
-      await Category.update(
-        { ...request.body },
-        { where: { id: parseInt(id) } }
-      )
+      await Product.update({ ...request.body }, { where: { id: parseInt(id) } })
     );
     response.sendStatus(200);
   } catch (error) {
@@ -60,11 +49,11 @@ router.put("/:id", async (request, response, next) => {
   }
 });
 
-router.delete("/:id", async (request, response, next) => {
+router.delete("/:id", auth, async (request, response, next) => {
   try {
     const { id } = request.params;
     console.log(id);
-    await Category.destroy({ where: { id: parseInt(id) } });
+    await Product.destroy({ where: { id: parseInt(id) } });
     response.sendStatus(200);
   } catch (error) {
     next(error);

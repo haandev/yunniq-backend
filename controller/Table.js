@@ -1,16 +1,13 @@
-const express = require("express");
-const { Token } = require("../../models");
-const { Table } = require("../../models");
-
-const router = express.Router();
+const router = require("express").Router();
+const { Table, Company } = require("../model");
 
 router.get("/", async (request, response, next) => {
   try {
     response.send(
-      await Token.findAll({
+      await Table.findAll({
         include: [
           {
-            model: Table,
+            model: Company,
           },
         ],
       })
@@ -24,10 +21,10 @@ router.get("/:id", async (request, response, next) => {
   try {
     const { id } = request.params;
     response.send(
-      await Token.findOne({
+      await Table.findOne({
         include: [
           {
-            model: Table,
+            model: Company,
           },
         ],
         where: { id: parseInt(id) },
@@ -40,7 +37,7 @@ router.get("/:id", async (request, response, next) => {
 
 router.post("/", async (request, response, next) => {
   try {
-    const result = await Token.create({ ...request.body });
+    const result = await Table.create({ ...request.body });
     response.send(result);
   } catch (error) {}
 });
@@ -49,7 +46,7 @@ router.put("/:id", async (request, response, next) => {
   try {
     const { id } = request.params;
     response.send(
-      await Token.update({ ...request.body }, { where: { id: parseInt(id) } })
+      await Table.update({ ...request.body }, { where: { id: parseInt(id) } })
     );
     response.sendStatus(200);
   } catch (error) {
@@ -61,7 +58,7 @@ router.delete("/:id", async (request, response, next) => {
   try {
     const { id } = request.params;
     console.log(id);
-    await Token.destroy({ where: { id: parseInt(id) } });
+    await Table.destroy({ where: { id: parseInt(id) } });
     response.sendStatus(200);
   } catch (error) {
     next(error);
