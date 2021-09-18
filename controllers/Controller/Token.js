@@ -1,11 +1,20 @@
 const express = require("express");
 const { Token } = require("../../models");
+const { Table } = require("../../models");
 
 const router = express.Router();
 
 router.get("/", async (request, response, next) => {
   try {
-    response.send(await Token.findAll({ include: associations }));
+    response.send(
+      await Token.findAll({
+        include: [
+          {
+            model: Table,
+          },
+        ],
+      })
+    );
   } catch (error) {
     next(error);
   }
@@ -16,7 +25,11 @@ router.get("/:id", async (request, response, next) => {
     const { id } = request.params;
     response.send(
       await Token.findOne({
-        include: associations.faults,
+        include: [
+          {
+            model: Table,
+          },
+        ],
         where: { id: parseInt(id) },
       })
     );

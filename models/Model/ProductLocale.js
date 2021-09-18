@@ -1,6 +1,6 @@
 const { sequelize, DataTypes } = require("../../connection");
 
-module.exports = sequelize.define("Product", {
+module.exports = sequelize.define("ProductLocale", {
   id: {
     autoIncrement: true,
     type: DataTypes.INTEGER.UNSIGNED,
@@ -9,14 +9,14 @@ module.exports = sequelize.define("Product", {
   },
   title: {
     type: DataTypes.TEXT,
-    allowNull: true,
+    allowNull: false,
   },
-  price: {
-    type: DataTypes.DOUBLE,
-    allowNull: true,
-  },
-  image: {
+  description: {
     type: DataTypes.TEXT,
-    allowNull: true,
+    allowNull: false,
+  },
+  locale: {
+    type: DataTypes.TEXT,
+    allowNull: false,
   },
 });

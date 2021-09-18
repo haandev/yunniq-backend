@@ -1,20 +1,11 @@
 const express = require("express");
-const { Table } = require("../../models");
-const { Company } = require("../../models");
+const { ProductLocale } = require("../../models");
 
 const router = express.Router();
 
 router.get("/", async (request, response, next) => {
   try {
-    response.send(
-      await Table.findAll({
-        include: [
-          {
-            model: Company,
-          },
-        ],
-      })
-    );
+    response.send(await ProductLocale.findAll());
   } catch (error) {
     next(error);
   }
@@ -24,12 +15,7 @@ router.get("/:id", async (request, response, next) => {
   try {
     const { id } = request.params;
     response.send(
-      await Table.findOne({
-        include: [
-          {
-            model: Company,
-          },
-        ],
+      await ProductLocale.findOne({
         where: { id: parseInt(id) },
       })
     );
@@ -40,7 +26,7 @@ router.get("/:id", async (request, response, next) => {
 
 router.post("/", async (request, response, next) => {
   try {
-    const result = await Table.create({ ...request.body });
+    const result = await ProductLocale.create({ ...request.body });
     response.send(result);
   } catch (error) {}
 });
@@ -49,7 +35,10 @@ router.put("/:id", async (request, response, next) => {
   try {
     const { id } = request.params;
     response.send(
-      await Table.update({ ...request.body }, { where: { id: parseInt(id) } })
+      await ProductLocale.update(
+        { ...request.body },
+        { where: { id: parseInt(id) } }
+      )
     );
     response.sendStatus(200);
   } catch (error) {
@@ -61,7 +50,7 @@ router.delete("/:id", async (request, response, next) => {
   try {
     const { id } = request.params;
     console.log(id);
-    await Table.destroy({ where: { id: parseInt(id) } });
+    await ProductLocale.destroy({ where: { id: parseInt(id) } });
     response.sendStatus(200);
   } catch (error) {
     next(error);

@@ -5,7 +5,11 @@ const router = express.Router();
 
 router.get("/", async (request, response, next) => {
   try {
-    response.send(await Product.findAll());
+    response.send(
+      await Product.findAll({
+        include: [{ all: true, nested: true }],
+      })
+    );
   } catch (error) {
     next(error);
   }
@@ -16,6 +20,7 @@ router.get("/:id", async (request, response, next) => {
     const { id } = request.params;
     response.send(
       await Product.findOne({
+        include: [{ all: true, nested: true }],
         where: { id: parseInt(id) },
       })
     );

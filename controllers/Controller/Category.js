@@ -1,11 +1,20 @@
 const express = require("express");
 const { Category } = require("../../models");
+const { Company } = require("../../models");
 
 const router = express.Router();
 
 router.get("/", async (request, response, next) => {
   try {
-    response.send(await Category.findAll());
+    response.send(
+      await Category.findAll({
+        include: [
+          {
+            model: Company,
+          },
+        ],
+      })
+    );
   } catch (error) {
     next(error);
   }
@@ -16,6 +25,11 @@ router.get("/:id", async (request, response, next) => {
     const { id } = request.params;
     response.send(
       await Category.findOne({
+        include: [
+          {
+            model: Company,
+          },
+        ],
         where: { id: parseInt(id) },
       })
     );
