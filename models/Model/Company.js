@@ -7,8 +7,48 @@ module.exports = sequelize.define("Company", {
     allowNull: false,
     primaryKey: true,
   },
-  name: {
+  company: {
     type: DataTypes.TEXT,
-    allowNull: true,
+    allowNull: false,
+  },
+  contact: {
+    type: DataTypes.TEXT,
+    allowNull: false,
+  },
+  logo: {
+    type: DataTypes.TEXT,
+    allowNull: false,
+  },
+  css: {
+    type: DataTypes.TEXT,
+    allowNull: false,
+  },
+  facebook: {
+    type: DataTypes.TEXT,
+    allowNull: false,
+  },
+  twitter: {
+    type: DataTypes.TEXT,
+    allowNull: false,
+  },
+  instagram: {
+    type: DataTypes.TEXT,
+    allowNull: false,
+  },
+  youtube: {
+    type: DataTypes.TEXT,
+    allowNull: false,
+  },
+  garson: {
+    type: DataTypes.TEXT,
+    allowNull: false,
+  },
+  vale: {
+    type: DataTypes.TEXT,
+    allowNull: false,
+  },
+  sikayet: {
+    type: DataTypes.TEXT,
+    allowNull: false,
   },
 });
